@@ -1,11 +1,17 @@
 package com.conaxgames.practice.kit;
 
+import com.conaxgames.CorePlugin;
 import com.conaxgames.internal.com.mongodb.client.MongoCollection;
 import com.conaxgames.internal.com.mongodb.client.model.Filters;
 import com.conaxgames.internal.com.mongodb.client.model.UpdateOptions;
 import com.conaxgames.practice.Practice;
+import com.conaxgames.practice.kit.command.KitBaseCommand;
+import com.conaxgames.practice.kit.command.KitItemCommands;
+import com.conaxgames.practice.kit.command.param.KitCommandParameter;
+import com.conaxgames.util.cmd.CommandManager;
 import org.bson.Document;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +34,13 @@ public class KitManager {
         kitsCollection.find().iterator().forEachRemaining(document -> {
             idToKitMap.put(document.getString("_id"), Practice.GSON.fromJson(document.toJson(), Kit.class));
         });
+
+        CommandManager commandManager = CorePlugin.getInstance().getCommandManager();
+        commandManager.registerParameter(Kit.class, new KitCommandParameter());
+        commandManager.registerAllClasses(Arrays.asList(
+                new KitBaseCommand(),
+                new KitItemCommands()
+        ));
     }
 
     public Collection<Kit> getKits() {

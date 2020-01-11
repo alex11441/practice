@@ -4,7 +4,9 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 @Getter @Setter
 public class Kit {
@@ -20,6 +22,11 @@ public class Kit {
      * The name displayed to players whenever used.
      */
     private String displayName;
+
+    /**
+     * The item displayed to players whenever used.
+     */
+    private ItemStack displayItem;
 
     /**
      * The kit's default items that are given to players.
