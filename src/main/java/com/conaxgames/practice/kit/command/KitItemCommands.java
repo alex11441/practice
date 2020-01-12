@@ -66,7 +66,8 @@ public class KitItemCommands implements CommandHandler {
 
         ItemStack hand = player.getItemInHand();
         if (hand.getType() == Material.AIR) {
-            player.sendMessage(CC.RED + "You can't set a kit's icon to air.");
+            kit.setDisplayItem(null);
+            player.sendMessage(CC.GREEN + "You have removed the icon for the " + kit.getId() + " kit.");
             return;
         }
 

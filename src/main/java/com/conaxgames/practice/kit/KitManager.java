@@ -86,4 +86,19 @@ public class KitManager {
                 document,
                 new UpdateOptions().upsert(true));
     }
+
+    /**
+     * Creates a kit with the given {@code id}.
+     *
+     * @param id the id to assign to the kit
+     */
+    public void createKit(String id) {
+        Kit kit = new Kit();
+        kit.setId(id);
+        kit.setMask(kit.getMask() + KitMask.ENABLED.getMask());
+
+        saveKit(kit);
+
+        idToKitMap.put(id, kit);
+    }
 }

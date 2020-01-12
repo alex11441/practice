@@ -52,7 +52,7 @@ public class KitMaskCommands implements CommandHandler {
     }
 
     @SubCommand(baseCommand = "kitmask", name = "add")
-    public void kitMaskAdd(Player player, @Param(name = "kit") Kit kit, KitMask mask) {
+    public void kitMaskAdd(Player player, @Param(name = "kit") Kit kit, @Param(name = "mask") KitMask mask) {
         if (kit == null) {
             player.sendMessage(CC.RED + "No kit found.");
             return;
@@ -73,7 +73,7 @@ public class KitMaskCommands implements CommandHandler {
     }
 
     @SubCommand(baseCommand = "kitmask", name = "remove")
-    public void kitMaskRemove(Player player, @Param(name = "kit") Kit kit, KitMask mask) {
+    public void kitMaskRemove(Player player, @Param(name = "kit") Kit kit, @Param(name = "mask") KitMask mask) {
         if (kit == null) {
             player.sendMessage(CC.RED + "No kit found.");
             return;
