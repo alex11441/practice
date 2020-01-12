@@ -8,6 +8,7 @@ import com.conaxgames.practice.lobby.LobbyManager;
 import com.conaxgames.practice.queue.QueueManager;
 import com.conaxgames.practice.util.adapter.ItemStackTypeAdapter;
 import com.conaxgames.practice.util.adapter.LocationTypeAdapter;
+import com.conaxgames.util.Config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class Practice extends JavaPlugin {
             .serializeNulls()
             .create();
 
+    private Config mainConfig;
+
     private MongoDatabase mongoDatabase;
 
     private ArenaManager arenaManager;
@@ -34,6 +37,8 @@ public class Practice extends JavaPlugin {
 
     public void onEnable() {
         instance = this;
+
+        this.mainConfig = new Config("config", this);
 
         this.mongoDatabase = CorePlugin.getInstance().getCoreDatabase();
 

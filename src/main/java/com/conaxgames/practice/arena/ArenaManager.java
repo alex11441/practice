@@ -7,18 +7,20 @@ import com.conaxgames.internal.com.mongodb.client.model.ReplaceOptions;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.arena.command.ArenaBaseCommand;
 import com.conaxgames.practice.arena.command.ArenaPasteCommands;
+import com.conaxgames.practice.arena.command.ArenaStatusCommands;
 import com.conaxgames.practice.arena.command.param.ArenaCommandParameter;
 import com.conaxgames.practice.arena.schematic.Schematic;
 import com.conaxgames.practice.arena.task.ArenaScanTask;
+import com.conaxgames.util.Config;
 import com.conaxgames.util.cmd.CommandManager;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ArenaManager {
 
@@ -32,6 +34,13 @@ public class ArenaManager {
      * All of the loaded {@link Arena}s.
      */
     private final Map<String, Arena> idToArenaMap = new HashMap<>();
+
+    /**
+     * This is probably my least favorite thing about this plugin.
+     * Arenas generate with the name as the schematic name and a number, therefore
+     * this list is used as a list of "prefixes" (no number)
+     */
+    private final List<String> disabledArenas = new ArrayList<>();
 
     /**
      * Folder with every schematic used for generating arenas.
@@ -51,11 +60,18 @@ public class ArenaManager {
             idToArenaMap.put(document.getString("_id"), Practice.GSON.fromJson(document.toJson(), Arena.class));
         });
 
+        // Load disabled arenas.
+        FileConfiguration config = Practice.getInstance().getConfig();
+        if (config.contains("disabledArenas")) {
+            disabledArenas.addAll(config.getStringList("disabledArenas"));
+        }
+
         CommandManager commandManager = CorePlugin.getInstance().getCommandManager();
         commandManager.registerParameter(Arena.class, new ArenaCommandParameter());
         commandManager.registerAllClasses(Arrays.asList(
                 new ArenaBaseCommand(),
-                new ArenaPasteCommands()
+                new ArenaPasteCommands(),
+                new ArenaStatusCommands()
         ));
     }
 
@@ -132,6 +148,39 @@ public class ArenaManager {
      */
     public void addArena(Arena arena) {
         idToArenaMap.put(arena.getName(), arena);
+    }
+
+    /**
+     * Toggles an arena by its name's prefix.
+     *
+     * @param prefix the prefix of arena names to disable
+     *
+     * @return true if disabled, otherwise false
+     */
+    public boolean toggleArena(String prefix) {
+        if (disabledArenas.contains(prefix)) {
+            disabledArenas.remove(prefix);
+            return false;
+        } else {
+            disabledArenas.add(prefix);
+            return true;
+        }
+    }
+
+    /**
+     * Saves all currently loaded and disabled arenas on the
+     * server to the database.
+     */
+    public void saveAllArenas() {
+        // Save all arenas to the database.
+        idToArenaMap.values().forEach(this::saveArena);
+
+        // Save disabled arenas.
+        if (!disabledArenas.isEmpty()) {
+            Config config = Practice.getInstance().getMainConfig();
+            config.getConfig().set("disabledArenas", disabledArenas);
+            config.save();
+        }
     }
 
     /**
