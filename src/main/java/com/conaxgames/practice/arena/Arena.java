@@ -24,4 +24,13 @@ public class Arena {
      */
     private boolean beingUsed;
 
+    /**
+     * Returns the arena name without numbers.
+     *
+     * @return the arena name without numbers.
+     */
+    public String getDisplayName() {
+        return name.replaceAll("\\d", "");
+    }
+
 }
