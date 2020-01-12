@@ -82,7 +82,7 @@ public class KitManager {
      * @param kit the kit to save
      */
     public void saveKit(Kit kit) {
-        Document document = Document.parse(Practice.GSON.toJson(this));
+        Document document = Document.parse(Practice.GSON.toJson(kit));
 
         kitsCollection.updateOne(Filters.eq("_id", kit.getId()),
                 document,

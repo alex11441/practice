@@ -75,4 +75,14 @@ public class KitItemCommands implements CommandHandler {
         TaskUtil.runAsync(() -> Practice.getInstance().getKitManager().saveKit(kit));
         player.sendMessage(CC.GREEN + "You have set the icon for the " + kit.getId() + " kit.");
     }
+
+    @SubCommand(baseCommand = "kit", name = "apply")
+    public void kitApply(Player player, @Param(name = "kit") Kit kit) {
+        if (kit == null) {
+            player.sendMessage(CC.RED + "No kit found.");
+            return;
+        }
+
+        kit.apply(player);
+    }
 }
