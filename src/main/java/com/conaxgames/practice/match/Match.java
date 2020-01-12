@@ -185,6 +185,19 @@ public class Match {
     }
 
     /**
+     * Returns a list with everyone in the {@code spectators}
+     * set as a Player object.
+     *
+     * @return a list with everyone in the {@code spectators} set as a Player object
+     */
+    public List<Player> getSpectatorPlayers() {
+        return spectators.stream()
+                .map(Bukkit::getPlayer)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Returns whether or not this match is an FFA match. (party)
      *
      * @return true if the match is an FFA match, otherwise false
