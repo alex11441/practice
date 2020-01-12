@@ -30,6 +30,7 @@ public class LobbyManager {
         player.teleport(spawnLocation);
 
         giveLobbyInventory(player);
+        updateVisibility(player);
     }
 
     /**
