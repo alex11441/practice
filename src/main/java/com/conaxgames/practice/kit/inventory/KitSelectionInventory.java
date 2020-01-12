@@ -37,8 +37,9 @@ public class KitSelectionInventory {
 
             inventory.addItem(
                     new InventoryUI.AbstractClickableItem(kit.getDisplayItem().clone()) {
-                        public void onClick(InventoryClickEvent inventoryClickEvent) {
+                        public void onClick(InventoryClickEvent event) {
                             consumer.accept(kit);
+                            event.getWhoClicked().closeInventory();
                         }
                     }
             );
