@@ -130,7 +130,7 @@ public class ItemStackTypeAdapter
         return element;
     }
 
-    private static String getDataKey(ItemStack item) {
+    private String getDataKey(ItemStack item) {
         if (item.getType() == Material.AIR) {
             return "data";
         }
@@ -142,7 +142,7 @@ public class ItemStackTypeAdapter
         return "data";
     }
 
-    private static JsonArray convertStringList(Collection<String> strings) {
+    private JsonArray convertStringList(Collection<String> strings) {
         JsonArray ret = new JsonArray();
         for (String string : strings) {
             ret.add(new JsonPrimitive(string));
@@ -150,7 +150,7 @@ public class ItemStackTypeAdapter
         return ret;
     }
 
-    private static List<String> convertStringList(JsonElement jsonElement) {
+    private List<String> convertStringList(JsonElement jsonElement) {
         JsonArray array = jsonElement.getAsJsonArray();
         List<String> ret = new ArrayList<>();
 
