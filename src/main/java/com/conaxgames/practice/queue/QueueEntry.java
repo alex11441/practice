@@ -3,9 +3,14 @@ package com.conaxgames.practice.queue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -33,5 +38,17 @@ public class QueueEntry {
      * If a solo match, the member's elo.
      */
     private int elo = 0;
+
+    /**
+     * Returns all players in the {@code members}field.
+     *
+     * @return all of this entry's players
+     */
+    List<Player> getPlayers() {
+        return members.stream()
+                .map(Bukkit::getPlayer)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
 
 }

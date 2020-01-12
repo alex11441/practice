@@ -47,18 +47,8 @@ public class KitQueue {
             // w/ QueueManager#removeFromQueue for code cleanliness
 
             List<Player> participants = new ArrayList<>();
-            participants.addAll(
-                    entry1.getMembers().stream()
-                            .map(Bukkit::getPlayer)
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList())
-            );
-            participants.addAll(
-                    entry2.getMembers().stream()
-                            .map(Bukkit::getPlayer)
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList())
-            );
+            participants.addAll(entry1.getPlayers());
+            participants.addAll(entry2.getPlayers());
 
             participants.forEach(player -> {
                 player.sendMessage("queueeeeeeeeed!! you would be in a match right now");

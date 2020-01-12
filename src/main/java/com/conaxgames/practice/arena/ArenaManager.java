@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArenaHandler {
+public class ArenaManager {
 
     /**
      * All of the loaded {@link Arena}s.
@@ -21,16 +21,10 @@ public class ArenaHandler {
      */
     private final File schematicsFolder = new File(Practice.getInstance().getDataFolder(), "schematics");
 
-    public ArenaHandler() {
+    public ArenaManager() {
         if (!schematicsFolder.exists()) {
-            try {
-                schematicsFolder.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            schematicsFolder.mkdir();
         }
-
-        
     }
 
     /**
@@ -74,7 +68,12 @@ public class ArenaHandler {
      * @param arenaName specified arena name or null
      */
     public void createArena(String schematicName, String arenaName, int x, int z) {
-        File file = new File(Practice.getInstance().getDataFolder())
+        File file = new File(this.schematicsFolder, schematicName);
+        if (!file.exists()) {
+            return;
+        }
+
+
     }
 
 }
