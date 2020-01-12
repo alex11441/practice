@@ -1,10 +1,15 @@
 package com.conaxgames.practice.queue;
 
+import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.kit.Kit;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class KitQueue {
@@ -40,6 +45,25 @@ public class KitQueue {
             // TODO:
             // Get the match members after it's created and remove them
             // w/ QueueManager#removeFromQueue for code cleanliness
+
+            List<Player> participants = new ArrayList<>();
+            participants.addAll(
+                    entry1.getMembers().stream()
+                            .map(Bukkit::getPlayer)
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.toList())
+            );
+            participants.addAll(
+                    entry2.getMembers().stream()
+                            .map(Bukkit::getPlayer)
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.toList())
+            );
+
+            participants.forEach(player -> {
+                player.sendMessage("queueeeeeeeeed!! you would be in a match right now");
+                Practice.getInstance().getQueueManager().removeFromQueue(player);
+            });
         }
     }
 

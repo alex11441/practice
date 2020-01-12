@@ -1,0 +1,50 @@
+package com.conaxgames.practice.kit.inventory;
+
+import com.conaxgames.inventory.InventoryUI;
+import com.conaxgames.practice.Practice;
+import com.conaxgames.practice.kit.Kit;
+import com.conaxgames.practice.kit.KitMask;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+
+import java.util.function.Consumer;
+
+/**
+ * This class is mainly for convenience, allowing
+ * a callback to run after a player picks any kit.
+ */
+public class KitSelectionInventory {
+
+    private final Player player;
+    private final boolean rankedOnly;
+    private final Consumer<Kit> consumer;
+
+    public KitSelectionInventory(Player player, boolean rankedOnly, Consumer<Kit> consumer) {
+        this.player = player;
+        this.rankedOnly = rankedOnly;
+        this.consumer = consumer;
+    }
+
+    public void show() {
+        InventoryUI inventory = new InventoryUI("Select a Kit", 2);
+
+        Practice.getInstance().getKitManager().getKits().stream()
+                .filter(kit -> kit.meetsMask(KitMask.ENABLED))
+                .forEach(kit -> {
+            if (rankedOnly && !kit.meetsMask(KitMask.RANKED)) {
+                return;
+            }
+
+            inventory.addItem(
+                    new InventoryUI.AbstractClickableItem(kit.getDisplayItem().clone()) {
+                        public void onClick(InventoryClickEvent inventoryClickEvent) {
+                            consumer.accept(kit);
+                        }
+                    }
+            );
+        });
+
+        player.openInventory(inventory.getCurrentPage());
+    }
+
+}

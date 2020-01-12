@@ -3,6 +3,7 @@ package com.conaxgames.practice.lobby;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.lobby.listener.LobbyGeneralListener;
 import com.conaxgames.practice.lobby.listener.LobbyInteractionListener;
+import com.conaxgames.practice.queue.QueueItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -39,6 +40,13 @@ public class LobbyManager {
      */
     public void giveLobbyInventory(Player player) {
         // TODO: Give appropriate queue, kit editor, leaderboards items when implemented
+        if (Practice.getInstance().getQueueManager().inQueue(player)) {
+            player.getInventory().setItem(8, QueueItems.LEAVE_QUEUE);
+            return;
+        }
+
+        player.getInventory().setItem(0, QueueItems.JOIN_UNRANKED_QUEUE);
+        player.getInventory().setItem(1, QueueItems.JOIN_RANKED_QUEUE);
     }
 
     /**

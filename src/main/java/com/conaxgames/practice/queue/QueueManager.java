@@ -2,6 +2,8 @@ package com.conaxgames.practice.queue;
 
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.kit.Kit;
+import com.conaxgames.practice.kit.KitMask;
+import com.conaxgames.practice.queue.listener.QueueItemListener;
 import com.conaxgames.practice.queue.listener.QueueQuitListener;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
@@ -16,8 +18,8 @@ import java.util.UUID;
 public class QueueManager {
 
     /**
-     * A queue table:
-     * Kit, is Ranked, and the actual {@link KitQueue} object
+     * A table representing a Kit, whether or not
+     * it's Ranked, and the actual {@link KitQueue} object
      */
     private final Table<Kit, Boolean, KitQueue> kitQueues = HashBasedTable.create();
 
@@ -27,10 +29,11 @@ public class QueueManager {
     private final Map<UUID, QueueEntry> uuidToKitEntryMap = new HashMap<>();
 
     public QueueManager() {
-        Practice.getInstance().getKitManager().getKits().stream().filter(Kit::isEnabled).forEach(kit -> {
+        Practice.getInstance().getKitManager().getKits().stream().filter(kit -> kit.meetsMask(KitMask.ENABLED))
+                .forEach(kit -> {
             kitQueues.put(kit, false, new KitQueue(kit, false));
 
-            if (kit.isRanked()) {
+            if (kit.meetsMask(KitMask.RANKED)) {
                 kitQueues.put(kit, true, new KitQueue(kit, true));
             }
         });
@@ -40,6 +43,7 @@ public class QueueManager {
         }, 20L, 20L);
 
         Bukkit.getPluginManager().registerEvents(new QueueQuitListener(this), Practice.getInstance());
+        Bukkit.getPluginManager().registerEvents(new QueueItemListener(this), Practice.getInstance());
     }
 
     /**

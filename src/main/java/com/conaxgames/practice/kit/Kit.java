@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -62,5 +63,17 @@ public class Kit {
      */
     public boolean meetsMask(KitMask mask) {
         return (this.mask & mask.getMask()) == mask.getMask();
+    }
+
+    /**
+     * Returns the kit's display name, varying whether
+     * or not {@code colored} is true or false.
+     *
+     * @param colored whether or not to return the colored name
+     *
+     * @return the kit's display name
+     */
+    public String getDisplayName(boolean colored) {
+        return colored ? displayName : ChatColor.stripColor(displayName);
     }
 }
