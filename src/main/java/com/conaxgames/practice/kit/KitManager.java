@@ -7,7 +7,9 @@ import com.conaxgames.internal.com.mongodb.client.model.UpdateOptions;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.kit.command.KitBaseCommand;
 import com.conaxgames.practice.kit.command.KitItemCommands;
+import com.conaxgames.practice.kit.command.KitMaskCommands;
 import com.conaxgames.practice.kit.command.param.KitCommandParameter;
+import com.conaxgames.practice.kit.command.param.KitMaskParameter;
 import com.conaxgames.util.cmd.CommandManager;
 import org.bson.Document;
 
@@ -37,12 +39,19 @@ public class KitManager {
 
         CommandManager commandManager = CorePlugin.getInstance().getCommandManager();
         commandManager.registerParameter(Kit.class, new KitCommandParameter());
+        commandManager.registerParameter(KitMask.class, new KitMaskParameter());
         commandManager.registerAllClasses(Arrays.asList(
                 new KitBaseCommand(),
-                new KitItemCommands()
+                new KitItemCommands(),
+                new KitMaskCommands()
         ));
     }
 
+    /**
+     * Gets all currently loaded kits.
+     *
+     * @return All loaded kits in the server.
+     */
     public Collection<Kit> getKits() {
         return idToKitMap.values();
     }

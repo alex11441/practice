@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,21 +33,10 @@ public class Kit {
     private KitItems defaultKitItems;
 
     /**
-     * Determines if this kit is playable, editable, etc.
+     * The kit's flags as a mask.
+     * See {@link KitMask}
      */
-    private boolean enabled = true;
-
-    /**
-     * Determines if players are allowed to queue for this kit
-     * in ranked.
-     */
-    private boolean ranked = true;
-
-    /**
-     * Determines if players are allowed to build in arenas
-     * in this kit.
-     */
-    private boolean allowBuilding = false;
+    private int mask;
 
     /**
      * Applies the kit's default armor and inventory
@@ -62,5 +50,17 @@ public class Kit {
     public void apply(Player player) {
         Preconditions.checkNotNull(defaultKitItems, "defaultKitItems");
         defaultKitItems.apply(player);
+    }
+
+    /**
+     * Determines whether or not this kit has a
+     * specified {@link KitMask}.
+     *
+     * @param mask the mask to check against
+     *
+     * @return true if this kit meets the mask, otherwise false
+     */
+    public boolean meetsMask(KitMask mask) {
+        return (this.mask & mask.getMask()) == mask.getMask();
     }
 }

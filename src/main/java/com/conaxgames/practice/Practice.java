@@ -36,4 +36,8 @@ public class Practice extends JavaPlugin {
         this.kitManager = new KitManager();
         this.queueManager = new QueueManager();
     }
+
+    public void onDisable() {
+        kitManager.saveAllKits();
+    }
 }

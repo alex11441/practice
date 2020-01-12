@@ -20,6 +20,11 @@ public class KitItemCommands implements CommandHandler {
 
     @SubCommand(baseCommand = "kit", name = "defaultinv")
     public void kitDefaultInv(Player player, @Param(name = "kit") Kit kit) {
+        if (kit == null) {
+            player.sendMessage(CC.RED + "No kit found.");
+            return;
+        }
+
         KitItems items = kit.getDefaultKitItems();
         if (items == null) {
             items = new KitItems();
@@ -35,6 +40,11 @@ public class KitItemCommands implements CommandHandler {
 
     @SubCommand(baseCommand = "kit", name = "editinv")
     public void kitEditInv(Player player, @Param(name = "kit") Kit kit) {
+        if (kit == null) {
+            player.sendMessage(CC.RED + "No kit found.");
+            return;
+        }
+
         KitItems items = kit.getDefaultKitItems();
         if (items == null) {
             items = new KitItems();
@@ -49,6 +59,11 @@ public class KitItemCommands implements CommandHandler {
 
     @SubCommand(baseCommand = "kit", name = "icon")
     public void kitIcon(Player player, @Param(name = "kit") Kit kit) {
+        if (kit == null) {
+            player.sendMessage(CC.RED + "No kit found.");
+            return;
+        }
+
         ItemStack hand = player.getItemInHand();
         if (hand.getType() == Material.AIR) {
             player.sendMessage(CC.RED + "You can't set a kit's icon to air.");
