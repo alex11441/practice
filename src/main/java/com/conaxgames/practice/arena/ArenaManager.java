@@ -128,7 +128,7 @@ public class ArenaManager {
         schematic.pasteSchematic(world, x, z);
 
         new ArenaScanTask(this, arenaName, world, x, z, schematic)
-                .runTaskLaterAsynchronously(Practice.getInstance(), 20L);
+                .runTaskLater(Practice.getInstance(), 20L);
     }
 
     /**
