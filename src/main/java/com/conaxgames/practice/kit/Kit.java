@@ -58,7 +58,7 @@ public class Kit {
      *
      * @param mask the mask to check against
      *
-     * @return true if this kit meets the mask, otherwise false
+     * @return true if this kit has the mask, otherwise false
      */
     public boolean meetsMask(KitMask mask) {
         return (this.mask & mask.getMask()) == mask.getMask();
