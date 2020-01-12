@@ -5,10 +5,7 @@ import com.conaxgames.internal.com.mongodb.client.MongoCollection;
 import com.conaxgames.internal.com.mongodb.client.model.Filters;
 import com.conaxgames.internal.com.mongodb.client.model.ReplaceOptions;
 import com.conaxgames.practice.Practice;
-import com.conaxgames.practice.kit.command.KitAppearanceCommands;
-import com.conaxgames.practice.kit.command.KitBaseCommand;
-import com.conaxgames.practice.kit.command.KitItemCommands;
-import com.conaxgames.practice.kit.command.KitMaskCommands;
+import com.conaxgames.practice.kit.command.*;
 import com.conaxgames.practice.kit.command.param.KitCommandParameter;
 import com.conaxgames.practice.kit.command.param.KitMaskParameter;
 import com.conaxgames.util.cmd.CommandManager;
@@ -45,7 +42,8 @@ public class KitManager {
                 new KitBaseCommand(),
                 new KitItemCommands(),
                 new KitMaskCommands(),
-                new KitAppearanceCommands()
+                new KitAppearanceCommands(),
+                new KitArenaCommands()
         ));
     }
 
