@@ -99,7 +99,7 @@ public class Match {
      */
     public void startMatch() {
         state = MatchState.IN_PROGRESS;
-        new MatchStartEvent(this).call();1
+        new MatchStartEvent(this).call();
 
         broadcast(CC.GREEN + "The match has started.");
     }
