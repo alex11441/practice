@@ -6,6 +6,7 @@ import com.conaxgames.internal.com.mongodb.client.model.Filters;
 import com.conaxgames.internal.com.mongodb.client.model.ReplaceOptions;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.arena.command.ArenaBaseCommand;
+import com.conaxgames.practice.arena.command.ArenaPasteCommands;
 import com.conaxgames.practice.arena.command.param.ArenaCommandParameter;
 import com.conaxgames.practice.arena.schematic.Schematic;
 import com.conaxgames.practice.arena.task.ArenaScanTask;
@@ -53,7 +54,8 @@ public class ArenaManager {
         CommandManager commandManager = CorePlugin.getInstance().getCommandManager();
         commandManager.registerParameter(Arena.class, new ArenaCommandParameter());
         commandManager.registerAllClasses(Arrays.asList(
-                new ArenaBaseCommand()
+                new ArenaBaseCommand(),
+                new ArenaPasteCommands()
         ));
     }
 

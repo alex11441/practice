@@ -5,12 +5,34 @@ import com.conaxgames.util.cmd.CommandHandler;
 import com.conaxgames.util.cmd.annotation.Param;
 import com.conaxgames.util.cmd.annotation.Text;
 import com.conaxgames.util.cmd.annotation.commandTypes.SubCommand;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 /**
  * Commands that deal with pasting arenas (paste, generate)
  */
 public class ArenaPasteCommands implements CommandHandler {
+
+    @SubCommand(baseCommand = "arena", name = "genhelper")
+    public void arenaGenHelper(Player player) {
+        Block origin = player.getLocation().getBlock();
+        Block up = origin.getRelative(BlockFace.UP);
+
+        origin.setType(Material.SPONGE);
+        up.setType(Material.SIGN_POST);
+
+        final Sign sign = (Sign) up.getState();
+
+        sign.setLine(0, ((int) player.getLocation().getPitch()) + "");
+        sign.setLine(1, ((int) player.getLocation().getYaw()) + "");
+        sign.update();
+
+        player.sendMessage(ChatColor.GREEN + "Generator helper placed.");
+    }
 
     @SubCommand(baseCommand = "arena", name = "paste")
     public void arenaPaste(Player player, @Param(name = "file") String file,
