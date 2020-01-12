@@ -1,16 +1,21 @@
 package com.conaxgames.practice.arena;
 
+import com.conaxgames.CorePlugin;
 import com.conaxgames.internal.com.mongodb.client.MongoCollection;
 import com.conaxgames.internal.com.mongodb.client.model.Filters;
 import com.conaxgames.internal.com.mongodb.client.model.ReplaceOptions;
 import com.conaxgames.practice.Practice;
+import com.conaxgames.practice.arena.command.ArenaBaseCommand;
+import com.conaxgames.practice.arena.command.param.ArenaCommandParameter;
 import com.conaxgames.practice.arena.schematic.Schematic;
 import com.conaxgames.practice.arena.task.ArenaScanTask;
+import com.conaxgames.util.cmd.CommandManager;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +49,12 @@ public class ArenaManager {
         arenasCollection.find().iterator().forEachRemaining(document -> {
             idToArenaMap.put(document.getString("_id"), Practice.GSON.fromJson(document.toJson(), Arena.class));
         });
+
+        CommandManager commandManager = CorePlugin.getInstance().getCommandManager();
+        commandManager.registerParameter(Arena.class, new ArenaCommandParameter());
+        commandManager.registerAllClasses(Arrays.asList(
+                new ArenaBaseCommand()
+        ));
     }
 
     /**
@@ -87,7 +98,7 @@ public class ArenaManager {
      * @param arenaName specified arena name or null
      */
     public void createArena(String schematicName, String arenaName, int x, int z) {
-        File file = new File(this.schematicsFolder, schematicName);
+        File file = new File(this.schematicsFolder, schematicName + ".schematic");
         if (!file.exists()) {
             return;
         }
