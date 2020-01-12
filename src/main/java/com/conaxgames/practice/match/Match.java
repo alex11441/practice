@@ -82,7 +82,7 @@ public class Match {
      */
     private MatchTeam winningTeam;
 
-    public Match(Arena arena, Kit kit, boolean isRanked, MatchTeam... teams) {
+    Match(Arena arena, Kit kit, boolean isRanked, MatchTeam... teams) {
         this.arena = arena;
         this.kit = kit;
         this.isRanked = isRanked;
