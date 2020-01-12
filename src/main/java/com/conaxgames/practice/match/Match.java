@@ -3,6 +3,8 @@ package com.conaxgames.practice.match;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.arena.Arena;
 import com.conaxgames.practice.kit.Kit;
+import com.conaxgames.practice.match.event.MatchEndEvent;
+import com.conaxgames.practice.match.event.MatchStartEvent;
 import com.conaxgames.practice.match.task.MatchCountdownTask;
 import com.conaxgames.util.finalutil.CC;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import org.bukkit.Sound;
 import org.bukkit.block.BlockState;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 public class Match {
@@ -96,7 +99,37 @@ public class Match {
      */
     public void startMatch() {
         state = MatchState.IN_PROGRESS;
+        new MatchStartEvent(this).call();1
+
         broadcast(CC.GREEN + "The match has started.");
+    }
+
+    /**
+     * Ends the match. Sets the state to {@link MatchState#ENDING}
+     * and calls a MatchEndEvent where everything else is handled.
+     */
+    public void endMatch() {
+        if (state == MatchState.ENDING) {
+            return;
+        }
+
+        state = MatchState.ENDING;
+        new MatchEndEvent(this).call();
+    }
+
+    /**
+     * Determines if enough conditions are met to
+     * end the match. Should be called after
+     * a player dies.
+     */
+    public void checkEnd() {
+        List<MatchTeam> teamsWithOneAlive = teams.stream()
+                .filter(team -> team.getLivingPlayers().size() == 1)
+                .collect(Collectors.toList());
+        if (teamsWithOneAlive.size() == 1) {
+            winningTeam = teamsWithOneAlive.get(0);
+            endMatch();
+        }
     }
 
     /**
