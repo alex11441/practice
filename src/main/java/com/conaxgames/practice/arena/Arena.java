@@ -17,7 +17,7 @@ public class Arena {
     /**
      * Locations players spawn at when a match starts.
      */
-    private final Location spawnA, spawnB;
+    private Location spawnA, spawnB;
 
     /**
      * Whether or not this arena is in use.
