@@ -5,6 +5,7 @@ import com.conaxgames.internal.com.mongodb.client.MongoCollection;
 import com.conaxgames.internal.com.mongodb.client.model.Filters;
 import com.conaxgames.internal.com.mongodb.client.model.UpdateOptions;
 import com.conaxgames.practice.Practice;
+import com.conaxgames.practice.kit.command.KitAppearanceCommands;
 import com.conaxgames.practice.kit.command.KitBaseCommand;
 import com.conaxgames.practice.kit.command.KitItemCommands;
 import com.conaxgames.practice.kit.command.KitMaskCommands;
@@ -43,7 +44,8 @@ public class KitManager {
         commandManager.registerAllClasses(Arrays.asList(
                 new KitBaseCommand(),
                 new KitItemCommands(),
-                new KitMaskCommands()
+                new KitMaskCommands(),
+                new KitAppearanceCommands()
         ));
     }
 

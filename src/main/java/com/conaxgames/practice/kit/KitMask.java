@@ -11,7 +11,8 @@ public enum KitMask {
 
     ENABLED(1, "Enabled", "enabled"),
     RANKED(2, "Ranked", "ranked"),
-    ALLOW_BUILDING(4, "Allow Building", "allow_building");
+    ALLOW_BUILDING(4, "Allow Building", "allow_building"),
+    EDITABLE(8, "Is Editable", "editable");
 
     private final int mask;
     private final String name;
