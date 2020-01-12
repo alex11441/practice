@@ -102,6 +102,17 @@ public class ArenaManager {
     }
 
     /**
+     * Attempts to get the arena with the specified {@code name}.
+     *
+     * @param name the arena name to lookup
+     *
+     * @return the arena if found, otherwise null
+     */
+    public Arena getArenaFromName(String name) {
+        return idToArenaMap.get(name);
+    }
+
+    /**
      * Adds an arena to the {@link #idToArenaMap} list.
      *
      * @param arena arena to add
