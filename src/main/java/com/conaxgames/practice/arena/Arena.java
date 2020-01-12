@@ -22,7 +22,7 @@ public class Arena {
     /**
      * Whether or not this arena is in use.
      */
-    private boolean beingUsed;
+    private transient boolean beingUsed;
 
     /**
      * Returns the arena name without numbers.
