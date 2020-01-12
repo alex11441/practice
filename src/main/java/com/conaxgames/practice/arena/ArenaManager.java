@@ -6,14 +6,13 @@ import com.conaxgames.internal.com.mongodb.client.model.ReplaceOptions;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.arena.schematic.Schematic;
 import com.conaxgames.practice.arena.task.ArenaScanTask;
-import com.conaxgames.practice.kit.Kit;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ArenaManager {
 
@@ -26,7 +25,7 @@ public class ArenaManager {
     /**
      * All of the loaded {@link Arena}s.
      */
-    private final List<Arena> arenas = new ArrayList<>();
+    private final Map<String, Arena> idToArenaMap = new HashMap<>();
 
     /**
      * Folder with every schematic used for generating arenas.
@@ -43,7 +42,7 @@ public class ArenaManager {
 
         // Load all arenas from the database.
         arenasCollection.find().iterator().forEachRemaining(document -> {
-            arenas.add(Practice.GSON.fromJson(document.toJson(), Arena.class));
+            idToArenaMap.put(document.getString("_id"), Practice.GSON.fromJson(document.toJson(), Arena.class));
         });
     }
 
@@ -103,12 +102,12 @@ public class ArenaManager {
     }
 
     /**
-     * Adds an arena to the {@link #arenas} list.
+     * Adds an arena to the {@link #idToArenaMap} list.
      *
      * @param arena arena to add
      */
     public void addArena(Arena arena) {
-        arenas.add(arena);
+        idToArenaMap.put(arena.getName(), arena);
     }
 
     /**
