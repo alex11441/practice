@@ -53,6 +53,7 @@ public class MatchCountdownTask extends BukkitRunnable {
 
                 for (Player player2 : matchPlayers) {
                     player1.showPlayer(player2);
+                    player2.showPlayer(player1);
                 }
             }
         }
