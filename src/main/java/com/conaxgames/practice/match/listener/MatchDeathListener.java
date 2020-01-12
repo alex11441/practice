@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
 
@@ -35,6 +36,21 @@ public class MatchDeathListener implements Listener {
         match.getTeams().forEach(matchTeam
                 -> matchTeam.getPlayerList().forEach(teamPlayer -> teamPlayer.hidePlayer(player)));
         match.getSpectatorPlayers().forEach(spectator -> spectator.hidePlayer(player));
+
+        team.killPlayer(uuid);
+        match.checkEnd();
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        if (!matchManager.inMatch(uuid)) {
+            return;
+        }
+
+        Match match = matchManager.getMatch(uuid);
+        MatchTeam team = match.getTeam(uuid);
 
         team.killPlayer(uuid);
         match.checkEnd();
