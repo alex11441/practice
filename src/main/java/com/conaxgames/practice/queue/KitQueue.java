@@ -38,7 +38,7 @@ public class KitQueue {
 
         // TODO: Check elo if ranked queue
 
-        while (queueEntriesCopy.size() % 2 == 0) {
+        while (queueEntriesCopy.size() >= 2 && queueEntriesCopy.size() % 2 == 0) {
             QueueEntry entry1 = queueEntriesCopy.remove(0);
             QueueEntry entry2 = queueEntriesCopy.remove(0);
 

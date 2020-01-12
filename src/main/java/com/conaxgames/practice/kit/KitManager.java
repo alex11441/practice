@@ -3,7 +3,7 @@ package com.conaxgames.practice.kit;
 import com.conaxgames.CorePlugin;
 import com.conaxgames.internal.com.mongodb.client.MongoCollection;
 import com.conaxgames.internal.com.mongodb.client.model.Filters;
-import com.conaxgames.internal.com.mongodb.client.model.UpdateOptions;
+import com.conaxgames.internal.com.mongodb.client.model.ReplaceOptions;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.kit.command.KitAppearanceCommands;
 import com.conaxgames.practice.kit.command.KitBaseCommand;
@@ -84,9 +84,9 @@ public class KitManager {
     public void saveKit(Kit kit) {
         Document document = Document.parse(Practice.GSON.toJson(kit));
 
-        kitsCollection.updateOne(Filters.eq("_id", kit.getId()),
+        kitsCollection.replaceOne(Filters.eq("_id", kit.getId()),
                 document,
-                new UpdateOptions().upsert(true));
+                new ReplaceOptions().upsert(true));
     }
 
     /**
