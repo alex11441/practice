@@ -2,6 +2,9 @@ package com.conaxgames.practice.queue;
 
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.kit.Kit;
+import com.conaxgames.practice.match.Match;
+import com.conaxgames.practice.match.MatchTeam;
+import com.conaxgames.util.finalutil.CC;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 
@@ -47,8 +50,17 @@ public class KitQueue {
             participants.addAll(entry1.getPlayers());
             participants.addAll(entry2.getPlayers());
 
+            Match match = Practice.getInstance().getMatchManager().createMatch(kit, isRanked,
+                    new MatchTeam(entry1.getMembers()), new MatchTeam(entry2.getMembers()));
             participants.forEach(player -> {
-                player.sendMessage("queueeeeeeeeed!! you would be in a match right now");
+                if (match == null) {
+                    player.sendMessage(CC.RED + "Failed to create the match.");
+                } else {
+                    String opponents = entry1.getMembers().contains(player.getUniqueId())
+                            ? entry2.getMemberNames() : entry1.getMemberNames();
+                    player.sendMessage(CC.GOLD + "Match found! Opponents: " + CC.YELLOW + opponents);
+                }
+
                 Practice.getInstance().getQueueManager().removeFromQueue(player);
             });
         }

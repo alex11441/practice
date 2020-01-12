@@ -43,18 +43,22 @@ public class MatchManager {
      * @param kit the match kit
      * @param isRanked whether or not the match is ranked
      * @param teams all teams participating in the match
+     *
+     * @return the created match or null if failed
      */
-    public void createMatch(Kit kit, boolean isRanked, MatchTeam... teams) {
+    public Match createMatch(Kit kit, boolean isRanked, MatchTeam... teams) {
         Arena arena = Practice.getInstance().getArenaManager().getRandomArena(kit);
         if (arena == null) {
             Practice.getInstance().getLogger().warning("Failed to get an arena for kit " + kit.getId());
-            return;
+            return null;
         }
 
         Match match = new Match(arena, kit, isRanked, teams);
 
         // Add all of the match's participants to the map
         match.getTeams().forEach(team -> team.getLivingPlayers().forEach(uuid -> playerToMatchMap.put(uuid, match)));
+
+        return match;
     }
 
     /**

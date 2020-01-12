@@ -51,4 +51,17 @@ public class QueueEntry {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Returns all player names in this entry.
+     *
+     * @return all player names in this entry
+     */
+    String getMemberNames() {
+        return members.stream()
+                .map(Bukkit::getPlayer)
+                .filter(Objects::nonNull)
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
+    }
+
 }

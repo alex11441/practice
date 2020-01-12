@@ -75,6 +75,6 @@ public class LobbyManager {
      * @return true if the player is in the lobby, otherwise false
      */
     public boolean inLobby(Player player) {
-        return true; // TODO: Check all other states once they're written
+        return !Practice.getInstance().getMatchManager().inMatch(player.getUniqueId());
     }
 }
