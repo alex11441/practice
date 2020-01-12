@@ -50,5 +50,6 @@ public class Practice extends JavaPlugin {
 
     public void onDisable() {
         kitManager.saveAllKits();
+        arenaManager.saveAllArenas();
     }
 }

@@ -11,6 +11,7 @@ import com.conaxgames.practice.arena.command.ArenaStatusCommands;
 import com.conaxgames.practice.arena.command.param.ArenaCommandParameter;
 import com.conaxgames.practice.arena.schematic.Schematic;
 import com.conaxgames.practice.arena.task.ArenaScanTask;
+import com.conaxgames.practice.kit.Kit;
 import com.conaxgames.util.Config;
 import com.conaxgames.util.cmd.CommandManager;
 import org.bson.Document;
@@ -128,6 +129,15 @@ public class ArenaManager {
 
         new ArenaScanTask(this, arenaName, world, x, z, schematic)
                 .runTaskLaterAsynchronously(Practice.getInstance(), 20L);
+    }
+
+    /**
+     * Gets all currently loaded arenas.
+     *
+     * @return All loaded arenas in the server.
+     */
+    public Collection<Arena> getArenas() {
+        return idToArenaMap.values();
     }
 
     /**
