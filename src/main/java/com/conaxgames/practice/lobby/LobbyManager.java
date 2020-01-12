@@ -40,6 +40,8 @@ public class LobbyManager {
      */
     public void giveLobbyInventory(Player player) {
         // TODO: Give appropriate queue, kit editor, leaderboards items when implemented
+        player.getInventory().clear();
+
         if (Practice.getInstance().getQueueManager().inQueue(player)) {
             player.getInventory().setItem(8, QueueItems.LEAVE_QUEUE);
             return;
