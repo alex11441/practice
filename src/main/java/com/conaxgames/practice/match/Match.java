@@ -6,6 +6,7 @@ import com.conaxgames.practice.kit.Kit;
 import com.conaxgames.practice.match.event.MatchEndEvent;
 import com.conaxgames.practice.match.event.MatchStartEvent;
 import com.conaxgames.practice.match.task.MatchCountdownTask;
+import com.conaxgames.practice.match.task.MatchEndTask;
 import com.conaxgames.util.finalutil.CC;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -117,25 +118,8 @@ public class Match {
 
         state = MatchState.ENDING;
 
-        MatchManager matchManager = Practice.getInstance().getMatchManager();
-        matchManager.getMatches().remove(this);
-
-        teams.forEach(team -> team.getPlayerList().forEach(player -> {
-            Practice.getInstance().getLobbyManager().sendToLobby(player);
-            matchManager.getPlayerToMatchMap().remove(player.getUniqueId());
-        }));
-
-        spectators.forEach(uuid -> {
-            Player spectator = Bukkit.getPlayer(uuid);
-            if (spectator != null) {
-                Practice.getInstance().getLobbyManager().sendToLobby(spectator);
-                // TODO: Remove from spectators map once created
-            }
-        });
-
         new MatchEndEvent(this).call();
-
-        arena.setBeingUsed(false);
+        new MatchEndTask(this).runTaskTimer(Practice.getInstance(), 0L, 20L);
     }
 
     /**
