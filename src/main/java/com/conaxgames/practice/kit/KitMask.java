@@ -18,7 +18,7 @@ public enum KitMask {
     private final String name;
     private final String id;
 
-    private static final KitMask[] VALUES = values();
+    public static final KitMask[] VALUES = values();
 
     public static KitMask getById(String id) {
         return Arrays.stream(VALUES).filter(mask -> mask.id.equals(id)).findFirst().orElse(null);

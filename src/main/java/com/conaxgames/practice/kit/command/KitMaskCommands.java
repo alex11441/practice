@@ -44,7 +44,7 @@ public class KitMaskCommands implements CommandHandler {
 
         player.sendMessage(CC.GREEN + "Masks of kit " + kit.getId() + ":");
         player.sendMessage(Joiner.on(", ").join(
-                Arrays.stream(KitMask.values())
+                Arrays.stream(KitMask.VALUES)
                         .filter(kit::meetsMask)
                         .map(KitMask::getName)
                         .collect(Collectors.toList()))
