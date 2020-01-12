@@ -33,4 +33,24 @@ public class Arena {
         return name.replaceAll("\\d", "");
     }
 
+    /**
+     * Returns the A spawn with 2.5 added to the Y so players
+     * don't spawn in blocks.
+     *
+     * @return the A spawn
+     */
+    public Location getSpawnA() {
+        return spawnA.clone().add(0, 2.5, 0);
+    }
+
+    /**
+     * Returns the B spawn with 2.5 added to the Y so players
+     * don't spawn in blocks.
+     *
+     * @return the B spawn
+     */
+    public Location getSpawnB() {
+        return spawnB.clone().add(0, 2.5, 0);
+    }
+
 }
