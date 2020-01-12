@@ -53,13 +53,9 @@ public class ArenaScanTask extends BukkitRunnable {
                             });
 
                             if (arena.getSpawnA() == null) {
-                                loc.setPitch(0);
-                                loc.setYaw(0);
                                 arena.setSpawnA(loc);
                                 Bukkit.broadcastMessage("Set location A");
                             } else if (arena.getSpawnB() == null) {
-                                loc.setPitch(0);
-                                loc.setYaw(180);
                                 arena.setSpawnB(loc);
                                 Bukkit.broadcastMessage("Set location B");
 
