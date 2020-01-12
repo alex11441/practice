@@ -34,7 +34,7 @@ public class QueueItemListener extends ItemListener {
 
                     Practice.getInstance().getLobbyManager().giveLobbyInventory(player);
                 }
-            });
+            }).show();
         };
     }
 
