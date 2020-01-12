@@ -1,5 +1,6 @@
 package com.conaxgames.practice.kit;
 
+import com.conaxgames.practice.arena.Arena;
 import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
@@ -7,6 +8,9 @@ import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter
 public class Kit {
@@ -32,6 +36,11 @@ public class Kit {
      * The kit's default items that are given to players.
      */
     private KitItems defaultKitItems;
+
+    /**
+     * The kit's enabled arenas.
+     */
+    private final List<String> enabledArenas = new ArrayList<>();
 
     /**
      * The kit's flags as a mask.
@@ -75,5 +84,23 @@ public class Kit {
      */
     public String getDisplayName(boolean colored) {
         return colored ? displayName : ChatColor.stripColor(displayName);
+    }
+
+    /**
+     * Toggles an arena by its name's prefix.
+     *
+     * @param arena the arena to enable/disable
+     *
+     * @return true if enabled, otherwise false
+     */
+    public boolean toggleArena(Arena arena) {
+        String arenaName = arena.getDisplayName();
+        if (enabledArenas.contains(arenaName)) {
+            enabledArenas.remove(arenaName);
+            return false;
+        } else {
+            enabledArenas.add(arenaName);
+            return true;
+        }
     }
 }

@@ -10,6 +10,9 @@ import com.conaxgames.util.cmd.annotation.commandTypes.SubCommand;
 import com.conaxgames.util.finalutil.CC;
 import org.bukkit.entity.Player;
 
+/**
+ * The base command, and a command to create or copy kits.
+ */
 public class KitBaseCommand implements CommandHandler {
 
     @BaseCommand(name = "kit", rank = Rank.MANAGER)
