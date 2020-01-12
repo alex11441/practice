@@ -32,6 +32,21 @@ public class LobbyManager {
     }
 
     /**
+     * Hides other players for the given {@code player}
+     * if appropriate.
+     *
+     * @param viewer the player to hide others for
+     */
+    public void updateVisibility(Player viewer) {
+        Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+            // TODO: Check for parties, following, etc.
+
+            viewer.hidePlayer(onlinePlayer);
+            onlinePlayer.hidePlayer(viewer);
+        });
+    }
+
+    /**
      * Gives a player the appropriate lobby items. Will differ
      * depending on certain factors, including whether a player is
      * in a party, a queue, etc.

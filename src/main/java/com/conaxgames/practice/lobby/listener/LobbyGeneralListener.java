@@ -22,6 +22,7 @@ public class LobbyGeneralListener implements Listener {
         Player player = event.getPlayer();
 
         lobbyManager.sendToLobby(player);
+        lobbyManager.updateVisibility(player);
     }
 
     @EventHandler
