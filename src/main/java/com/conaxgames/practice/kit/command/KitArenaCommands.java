@@ -3,6 +3,7 @@ package com.conaxgames.practice.kit.command;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.arena.Arena;
 import com.conaxgames.practice.kit.Kit;
+import com.conaxgames.util.TaskUtil;
 import com.conaxgames.util.cmd.CommandHandler;
 import com.conaxgames.util.cmd.annotation.Param;
 import com.conaxgames.util.cmd.annotation.commandTypes.SubCommand;
@@ -29,5 +30,6 @@ public class KitArenaCommands implements CommandHandler {
         player.sendMessage(CC.GREEN
                 + (kit.toggleArena(arena) ? "Enabled" : "Disabled")
                 + " arena " + arena + " for kit " + kit.getId() + ".");
+        TaskUtil.runAsync(() -> Practice.getInstance().getKitManager().saveKit(kit));
     }
 }
