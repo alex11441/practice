@@ -22,6 +22,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ArenaManager {
 
@@ -204,5 +205,36 @@ public class ArenaManager {
         arenasCollection.replaceOne(Filters.eq("_id", arena.getName()),
                 document,
                 new ReplaceOptions().upsert(true));
+    }
+
+    /**
+     * Searches for a random arena that is enabled on the
+     * given {@code kit}.
+     *
+     * @param kit the kit to search with
+     *
+     * @return a random arena, or null if none found
+     */
+    public Arena getRandomArena(Kit kit) {
+        List<Arena> possibleArenas = new ArrayList<>();
+
+        for (Arena arena : idToArenaMap.values()) {
+            String name = arena.getDisplayName();
+            if (disabledArenas.contains(name)) {
+                continue;
+            }
+
+            if (!kit.getEnabledArenas().contains(name)) {
+                continue;
+            }
+
+            possibleArenas.add(arena);
+        }
+
+        if (possibleArenas.size() == 0) {
+            return null;
+        }
+
+        return possibleArenas.get(ThreadLocalRandom.current().nextInt(possibleArenas.size()));
     }
 }
