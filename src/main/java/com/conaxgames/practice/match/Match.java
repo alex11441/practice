@@ -8,9 +8,11 @@ import com.conaxgames.practice.match.event.MatchStartEvent;
 import com.conaxgames.practice.match.task.MatchCountdownTask;
 import com.conaxgames.util.finalutil.CC;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -114,7 +116,26 @@ public class Match {
         }
 
         state = MatchState.ENDING;
+
+        MatchManager matchManager = Practice.getInstance().getMatchManager();
+        matchManager.getMatches().remove(this);
+
+        teams.forEach(team -> team.getPlayerList().forEach(player -> {
+            Practice.getInstance().getLobbyManager().sendToLobby(player);
+            matchManager.getPlayerToMatchMap().remove(player.getUniqueId());
+        }));
+
+        spectators.forEach(uuid -> {
+            Player spectator = Bukkit.getPlayer(uuid);
+            if (spectator != null) {
+                Practice.getInstance().getLobbyManager().sendToLobby(spectator);
+                // TODO: Remove from spectators map once created
+            }
+        });
+
         new MatchEndEvent(this).call();
+
+        arena.setBeingUsed(false);
     }
 
     /**
@@ -130,6 +151,17 @@ public class Match {
             winningTeam = teamsWithOneAlive.get(0);
             endMatch();
         }
+    }
+
+    /**
+     * Attempts to get the team with the given {@code uuid} in it.
+     *
+     * @param uuid the uuid to lookup
+     *
+     * @return the team if found, otherwise null
+     */
+    public MatchTeam getTeam(UUID uuid) {
+        return teams.stream().filter(team -> team.getLivingPlayers().contains(uuid)).findFirst().orElse(null);
     }
 
     /**

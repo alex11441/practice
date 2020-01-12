@@ -4,6 +4,8 @@ import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.arena.Arena;
 import com.conaxgames.practice.kit.Kit;
 import com.conaxgames.practice.match.listener.MatchBlockListener;
+import com.conaxgames.practice.match.listener.MatchDeathListener;
+import com.conaxgames.practice.match.listener.MatchDropListener;
 import com.conaxgames.practice.match.listener.MatchKnockbackListener;
 import io.netty.util.internal.ConcurrentSet;
 import lombok.Getter;
@@ -30,6 +32,8 @@ public class MatchManager {
     public MatchManager() {
         Bukkit.getPluginManager().registerEvents(new MatchKnockbackListener(), Practice.getInstance());
         Bukkit.getPluginManager().registerEvents(new MatchBlockListener(this), Practice.getInstance());
+        Bukkit.getPluginManager().registerEvents(new MatchDropListener(this), Practice.getInstance());
+        Bukkit.getPluginManager().registerEvents(new MatchDeathListener(this), Practice.getInstance());
     }
 
     /**
@@ -53,10 +57,25 @@ public class MatchManager {
         match.getTeams().forEach(team -> team.getLivingPlayers().forEach(uuid -> playerToMatchMap.put(uuid, match)));
     }
 
+    /**
+     * Returns whether or not the given {@code uuid} is
+     * in a match.
+     *
+     * @param uuid the uuid to check
+     *
+     * @return true if the uuid is in a match, otherwise false
+     */
     public boolean inMatch(UUID uuid) {
         return playerToMatchMap.containsKey(uuid);
     }
 
+    /**
+     * Attempts to get the match with the given {@code uuid} in it.
+     *
+     * @param uuid the uuid to lookup
+     *
+     * @return the match if found, otherwise null
+     */
     public Match getMatch(UUID uuid) {
         return playerToMatchMap.get(uuid);
     }

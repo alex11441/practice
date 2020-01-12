@@ -5,6 +5,7 @@ import com.conaxgames.internal.com.mongodb.client.MongoDatabase;
 import com.conaxgames.practice.arena.ArenaManager;
 import com.conaxgames.practice.kit.KitManager;
 import com.conaxgames.practice.lobby.LobbyManager;
+import com.conaxgames.practice.match.MatchManager;
 import com.conaxgames.practice.queue.QueueManager;
 import com.conaxgames.practice.util.adapter.ItemStackTypeAdapter;
 import com.conaxgames.practice.util.adapter.LocationTypeAdapter;
@@ -34,6 +35,7 @@ public class Practice extends JavaPlugin {
     private LobbyManager lobbyManager;
     private KitManager kitManager;
     private QueueManager queueManager;
+    private MatchManager matchManager;
 
     public void onEnable() {
         instance = this;
@@ -46,6 +48,7 @@ public class Practice extends JavaPlugin {
         this.lobbyManager = new LobbyManager();
         this.kitManager = new KitManager();
         this.queueManager = new QueueManager();
+        this.matchManager = new MatchManager();
     }
 
     public void onDisable() {

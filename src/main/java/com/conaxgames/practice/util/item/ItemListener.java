@@ -1,8 +1,10 @@
 package com.conaxgames.practice.util.item;
 
+import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,12 +21,21 @@ public abstract class ItemListener implements Listener {
 
     private final Map<ItemStack, Consumer<Player>> handlers = new HashMap<>();
 
+    protected boolean allowItemDrops = false;
+
     protected final void addHandler(ItemStack stack, Consumer<Player> handler) {
         this.handlers.put(stack, handler);
     }
 
     public static void addButtonCooldown(Player player, int ms) {
         canUseButton.put(player.getUniqueId(), System.currentTimeMillis() + ms);
+    }
+
+    @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        if (!allowItemDrops && handlers.containsKey(event.getItemDrop().getItemStack())) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
