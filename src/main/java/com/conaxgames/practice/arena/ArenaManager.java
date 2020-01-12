@@ -228,6 +228,10 @@ public class ArenaManager {
                 continue;
             }
 
+            if (arena.isBeingUsed()) {
+                continue;
+            }
+
             possibleArenas.add(arena);
         }
 
