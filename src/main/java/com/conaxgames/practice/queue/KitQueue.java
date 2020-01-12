@@ -3,13 +3,10 @@ package com.conaxgames.practice.queue;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.kit.Kit;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class KitQueue {
