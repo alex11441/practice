@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -43,6 +44,22 @@ public class LobbyInteractionListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         cancelEventIfNecessary(player, event);
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return;
+        }
+
+        Player player = (Player) event.getEntity();
+        if (lobbyManager.inLobby(player)) {
+            if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+                lobbyManager.sendToLobby(player);
+            }
+
+            event.setCancelled(true);
+        }
     }
 
     private void cancelEventIfNecessary(Player player, Cancellable cancellable) {
