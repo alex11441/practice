@@ -4,8 +4,14 @@ import com.conaxgames.practice.match.Match;
 import com.conaxgames.practice.match.MatchState;
 import com.conaxgames.util.finalutil.CC;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class MatchCountdownTask extends BukkitRunnable {
@@ -18,6 +24,37 @@ public class MatchCountdownTask extends BukkitRunnable {
         if (match.getState() != MatchState.COUNTDOWN) {
             cancel();
             return;
+        }
+
+        if (countdown == 5) {
+            Set<Player> matchPlayers = new HashSet<>();
+
+            match.getTeams().forEach(team -> team.getLivingPlayerList().forEach(player -> {
+                Location teleportLocation;
+                if (match.isFFA()) {
+                    teleportLocation = match.getArena().getSpawnA();
+                } else {
+                    teleportLocation = team == match.getTeams().get(0)
+                            ? match.getArena().getSpawnA()
+                            : match.getArena().getSpawnB();
+                }
+
+                player.teleport(teleportLocation);
+                match.getKit().apply(player);
+
+                matchPlayers.add(player);
+            }));
+
+            for (Player player1 : matchPlayers) {
+                for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    player1.hidePlayer(onlinePlayer);
+                    onlinePlayer.hidePlayer(player1);
+                }
+
+                for (Player player2 : matchPlayers) {
+                    player1.showPlayer(player2);
+                }
+            }
         }
 
         if (countdown == 0) {

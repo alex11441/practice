@@ -37,6 +37,7 @@ public class KitItems {
      * @param player the player to give the kit to
      */
     public void apply(Player player) {
+        player.getInventory().clear();
         player.getInventory().setArmorContents(armor);
         player.getInventory().setContents(items);
         player.updateInventory();

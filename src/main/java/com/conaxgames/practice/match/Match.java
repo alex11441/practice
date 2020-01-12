@@ -151,4 +151,13 @@ public class Match {
         teams.forEach(team -> team.getLivingPlayerList()
                 .forEach(player -> player.playSound(player.getLocation(), sound, 10, pitch)));
     }
+
+    /**
+     * Returns whether or not this match is an FFA match. (party)
+     *
+     * @return true if the match is an FFA match, otherwise false
+     */
+    public boolean isFFA() {
+        return teams.size() > 2;
+    }
 }
