@@ -3,6 +3,7 @@ package com.conaxgames.practice.match;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.arena.Arena;
 import com.conaxgames.practice.kit.Kit;
+import com.conaxgames.practice.match.listener.MatchBlockListener;
 import com.conaxgames.practice.match.listener.MatchKnockbackListener;
 import io.netty.util.internal.ConcurrentSet;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class MatchManager {
 
     public MatchManager() {
         Bukkit.getPluginManager().registerEvents(new MatchKnockbackListener(), Practice.getInstance());
+        Bukkit.getPluginManager().registerEvents(new MatchBlockListener(this), Practice.getInstance());
     }
 
     /**
