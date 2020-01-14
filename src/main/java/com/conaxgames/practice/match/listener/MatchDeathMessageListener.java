@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -21,7 +22,7 @@ public class MatchDeathMessageListener implements Listener {
 
     private final MatchManager matchManager;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST) // run this first before they respawn so killer isnt null
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         if (!matchManager.inMatch(player.getUniqueId())) {
