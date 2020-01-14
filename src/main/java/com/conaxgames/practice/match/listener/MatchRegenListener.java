@@ -5,6 +5,7 @@ import com.conaxgames.practice.match.Match;
 import com.conaxgames.practice.match.MatchManager;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
@@ -13,6 +14,7 @@ public class MatchRegenListener implements Listener {
 
     private final MatchManager matchManager;
 
+    @EventHandler
     public void onEntityRegainHealth(EntityRegainHealthEvent event) {
         if (!(event.getEntity() instanceof Player)
                 || event.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) {
