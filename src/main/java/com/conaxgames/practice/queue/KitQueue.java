@@ -42,10 +42,6 @@ public class KitQueue {
             QueueEntry entry1 = queueEntriesCopy.remove(0);
             QueueEntry entry2 = queueEntriesCopy.remove(0);
 
-            // TODO:
-            // Get the match members after it's created and remove them
-            // w/ QueueManager#removeFromQueue for code cleanliness
-
             List<Player> participants = new ArrayList<>();
             participants.addAll(entry1.getPlayers());
             participants.addAll(entry2.getPlayers());
@@ -58,7 +54,7 @@ public class KitQueue {
                 } else {
                     String opponents = entry1.getMembers().contains(player.getUniqueId())
                             ? entry2.getMemberNames() : entry1.getMemberNames();
-                    player.sendMessage(CC.GOLD + "Match found! Opponents: " + CC.YELLOW + opponents);
+                    player.sendMessage(CC.GOLD + "Match found! Opponent: " + CC.YELLOW + opponents);
                 }
 
                 Practice.getInstance().getQueueManager().removeFromQueue(player);
