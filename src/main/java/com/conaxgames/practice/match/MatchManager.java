@@ -32,6 +32,7 @@ public class MatchManager {
         Bukkit.getPluginManager().registerEvents(new MatchDropListener(this), Practice.getInstance());
         Bukkit.getPluginManager().registerEvents(new MatchDeathListener(this), Practice.getInstance());
         Bukkit.getPluginManager().registerEvents(new MatchDeathMessageListener(this), Practice.getInstance());
+        Bukkit.getPluginManager().registerEvents(new MatchRegenListener(this), Practice.getInstance());
     }
 
     /**
