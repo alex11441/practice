@@ -29,7 +29,7 @@ public class KitEditorInventory {
 
             ItemStack saveItem = ItemUtil.createItem(Material.CHEST, CC.GOLD + "Save kit "
                     + CC.YELLOW + kit.getDisplayName(false) + " #" + slot);
-            inventory.setItem(slot + 1, 1, new InventoryUI.AbstractClickableItem(saveItem) {
+            inventory.setItem(slot + 3, 1, new InventoryUI.AbstractClickableItem(saveItem) {
                 @Override
                 public void onClick(InventoryClickEvent event) {
                     KitItems item = Practice.getInstance().getCustomKitManager().getKit(player, kit, finalSlot);
@@ -63,7 +63,7 @@ public class KitEditorInventory {
         ItemStack deleteItem = ItemUtil.createItem(Material.FLINT, CC.GOLD + "Delete kit "
                 + CC.YELLOW + kit.getDisplayName(false) + " #" + slot);
 
-        inventory.setItem(slot + 1, 2, new InventoryUI.AbstractClickableItem(loadItem) {
+        inventory.setItem(slot + 3, 2, new InventoryUI.AbstractClickableItem(loadItem) {
             @Override
             public void onClick(InventoryClickEvent event) {
                 ItemStack[] contents = item.getItems();
@@ -77,12 +77,12 @@ public class KitEditorInventory {
             }
         });
 
-        inventory.setItem(slot + 1, 3, new InventoryUI.AbstractClickableItem(deleteItem) {
+        inventory.setItem(slot + 3, 3, new InventoryUI.AbstractClickableItem(deleteItem) {
             @Override
             public void onClick(InventoryClickEvent event) {
                 Practice.getInstance().getCustomKitManager().deleteKit(player, item);
-                inventory.setItem(slot + 1, 2, null);
-                inventory.setItem(slot + 1, 3, null);
+                inventory.setItem(slot + 3, 2, null);
+                inventory.setItem(slot + 3, 3, null);
                 player.sendMessage(CC.GREEN + "Deleted kit " + slot + ".");
             }
         });
