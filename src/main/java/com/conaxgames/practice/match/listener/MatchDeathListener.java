@@ -59,8 +59,6 @@ public class MatchDeathListener implements Listener {
     private void respawn(Player player) {
         Location location = player.getLocation();
 
-        player.spigot().respawn();
-
         PlayerUtil.clearPlayer(player);
 
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
