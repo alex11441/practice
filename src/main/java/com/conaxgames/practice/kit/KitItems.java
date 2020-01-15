@@ -28,7 +28,7 @@ public class KitItems {
     /**
      * Default kit editor inventory for this kit.
      */
-    private ItemStack[] kitEditorItems = new ItemStack[0];
+    private ItemStack[] kitEditorItems;
 
     /**
      * Applies the kit's default armor and inventory
