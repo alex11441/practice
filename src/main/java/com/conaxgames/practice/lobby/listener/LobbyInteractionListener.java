@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
@@ -60,6 +61,12 @@ public class LobbyInteractionListener implements Listener {
 
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        Player player = event.getPlayer();
+        cancelEventIfNecessary(player, event);
     }
 
     private void cancelEventIfNecessary(Player player, Cancellable cancellable) {

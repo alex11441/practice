@@ -4,6 +4,7 @@ import com.conaxgames.inventory.InventoryUI;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.kit.Kit;
 import com.conaxgames.practice.kit.KitMask;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -13,17 +14,12 @@ import java.util.function.Consumer;
  * This class is mainly for convenience, allowing
  * a callback to run after a player picks any kit.
  */
+@RequiredArgsConstructor
 public class KitSelectionInventory {
 
     private final Player player;
     private final boolean rankedOnly;
     private final Consumer<Kit> consumer;
-
-    public KitSelectionInventory(Player player, boolean rankedOnly, Consumer<Kit> consumer) {
-        this.player = player;
-        this.rankedOnly = rankedOnly;
-        this.consumer = consumer;
-    }
 
     public void show() {
         InventoryUI inventory = new InventoryUI("Select a Kit", 2);

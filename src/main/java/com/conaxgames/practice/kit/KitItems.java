@@ -31,6 +31,19 @@ public class KitItems {
     private ItemStack[] kitEditorItems;
 
     /**
+     * Only used for custom kits - the name of the kit these
+     * items are designated for
+     */
+    private String kitName;
+
+    /**
+     * Only used for custom kits - the slot of this
+     * kit that the player sees, that is shown in the
+     * kit editor, etc.
+     */
+    private int slot;
+
+    /**
      * Applies the kit's default armor and inventory
      * contents to the specified {@code player}.
      *

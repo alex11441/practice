@@ -1,6 +1,7 @@
 package com.conaxgames.practice.lobby;
 
 import com.conaxgames.practice.Practice;
+import com.conaxgames.practice.customkit.KitEditorItems;
 import com.conaxgames.practice.lobby.listener.LobbyGeneralListener;
 import com.conaxgames.practice.lobby.listener.LobbyInteractionListener;
 import com.conaxgames.practice.queue.QueueItems;
@@ -31,6 +32,8 @@ public class LobbyManager {
 
         giveLobbyInventory(player);
         updateVisibility(player);
+
+        Practice.getInstance().getCustomKitManager().getEditingKitMap().remove(player.getUniqueId());
     }
 
     /**
@@ -66,6 +69,8 @@ public class LobbyManager {
 
         player.getInventory().setItem(0, QueueItems.JOIN_UNRANKED_QUEUE);
         player.getInventory().setItem(1, QueueItems.JOIN_RANKED_QUEUE);
+
+        player.getInventory().setItem(8, KitEditorItems.EDIT_KITS);
     }
 
     /**

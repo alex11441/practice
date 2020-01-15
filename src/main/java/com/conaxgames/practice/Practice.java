@@ -3,6 +3,7 @@ package com.conaxgames.practice;
 import com.conaxgames.CorePlugin;
 import com.conaxgames.internal.com.mongodb.client.MongoDatabase;
 import com.conaxgames.practice.arena.ArenaManager;
+import com.conaxgames.practice.customkit.CustomKitManager;
 import com.conaxgames.practice.kit.KitManager;
 import com.conaxgames.practice.lobby.LobbyManager;
 import com.conaxgames.practice.match.MatchManager;
@@ -36,6 +37,7 @@ public class Practice extends JavaPlugin {
     private KitManager kitManager;
     private QueueManager queueManager;
     private MatchManager matchManager;
+    private CustomKitManager customKitManager;
 
     public void onEnable() {
         instance = this;
@@ -49,10 +51,12 @@ public class Practice extends JavaPlugin {
         this.kitManager = new KitManager();
         this.queueManager = new QueueManager();
         this.matchManager = new MatchManager();
+        this.customKitManager = new CustomKitManager();
     }
 
     public void onDisable() {
         kitManager.saveAllKits();
         arenaManager.saveAllArenas();
+        customKitManager.saveEditorLocation();
     }
 }
