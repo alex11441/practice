@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -52,6 +53,8 @@ public class Practice extends JavaPlugin {
         this.queueManager = new QueueManager();
         this.matchManager = new MatchManager();
         this.customKitManager = new CustomKitManager();
+
+        getServer().getWorlds().forEach(world -> world.getEntities().forEach(Entity::remove));
     }
 
     public void onDisable() {

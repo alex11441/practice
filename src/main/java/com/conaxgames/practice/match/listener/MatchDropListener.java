@@ -1,6 +1,8 @@
 package com.conaxgames.practice.match.listener;
 
+import com.conaxgames.practice.match.Match;
 import com.conaxgames.practice.match.MatchManager;
+import com.conaxgames.util.TaskUtil;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -25,7 +27,15 @@ public class MatchDropListener implements Listener {
         Item drop = event.getItemDrop();
         if (drop.getItemStack().getType() == Material.GLASS_BOTTLE) {
             drop.remove();
+            return;
         }
+
+        Match match = matchManager.getMatch(player.getUniqueId());
+        match.getEntitiesToRemove().add(drop);
+        TaskUtil.runLater(() -> {
+            drop.remove();
+            match.getEntitiesToRemove().remove(drop);
+        }, 20L * 5);
     }
 
     @EventHandler

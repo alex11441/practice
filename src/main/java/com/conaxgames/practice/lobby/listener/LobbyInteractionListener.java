@@ -1,5 +1,6 @@
 package com.conaxgames.practice.lobby.listener;
 
+import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.lobby.LobbyManager;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.GameMode;
@@ -38,6 +39,11 @@ public class LobbyInteractionListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+
+        if (Practice.getInstance().getCustomKitManager().getEditingKitMap().containsKey(player.getUniqueId())) {
+            return;
+        }
+
         cancelEventIfNecessary(player, event);
     }
 

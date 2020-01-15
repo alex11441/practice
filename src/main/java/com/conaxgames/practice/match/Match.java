@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -67,6 +68,12 @@ public class Match {
      * original state (before the match started.)
      */
     private final List<BlockState> blockChanges = new LinkedList<>();
+
+    /**
+     * Maintains a list of entities on the ground (dropped,
+     * from death, etc.) to be removed when the match ends.
+     */
+    private final Set<Entity> entitiesToRemove = new HashSet<>();
 
     /**
      * Whether or not this match is ranked.
