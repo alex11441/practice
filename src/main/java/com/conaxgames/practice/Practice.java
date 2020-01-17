@@ -4,6 +4,7 @@ import com.conaxgames.CorePlugin;
 import com.conaxgames.internal.com.mongodb.client.MongoDatabase;
 import com.conaxgames.practice.arena.ArenaManager;
 import com.conaxgames.practice.customkit.CustomKitManager;
+import com.conaxgames.practice.duel.DuelManager;
 import com.conaxgames.practice.kit.KitManager;
 import com.conaxgames.practice.lobby.LobbyManager;
 import com.conaxgames.practice.match.MatchManager;
@@ -40,6 +41,7 @@ public class Practice extends JavaPlugin {
     private QueueManager queueManager;
     private MatchManager matchManager;
     private CustomKitManager customKitManager;
+    private DuelManager duelManager;
 
     public void onEnable() {
         instance = this;
@@ -54,6 +56,7 @@ public class Practice extends JavaPlugin {
         this.queueManager = new QueueManager();
         this.matchManager = new MatchManager();
         this.customKitManager = new CustomKitManager();
+        this.duelManager = new DuelManager();
 
         getServer().getWorlds().forEach(world -> world.getEntities().forEach(Entity::remove));
     }

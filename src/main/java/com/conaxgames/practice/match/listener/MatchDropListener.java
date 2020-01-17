@@ -27,8 +27,14 @@ public class MatchDropListener implements Listener {
         }
 
         Item drop = event.getItemDrop();
-        if (drop.getItemStack().getType() == Material.GLASS_BOTTLE) {
+        Material type = drop.getItemStack().getType();
+        if (type == Material.GLASS_BOTTLE) {
             drop.remove();
+            return;
+        }
+
+        if (type == Material.ENCHANTED_BOOK) {
+            event.setCancelled(true);
             return;
         }
 

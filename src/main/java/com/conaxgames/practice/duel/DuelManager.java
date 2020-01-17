@@ -1,18 +1,28 @@
 package com.conaxgames.practice.duel;
 
+import com.conaxgames.CorePlugin;
+import com.conaxgames.practice.Practice;
+import com.conaxgames.practice.duel.command.DuelCommands;
+import com.conaxgames.practice.duel.listener.DuelQuitListener;
 import com.conaxgames.practice.kit.Kit;
-import com.conaxgames.util.ttl.TtlHashMap;
-import io.netty.util.internal.ConcurrentSet;
+import org.bukkit.Bukkit;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 
 public class DuelManager {
 
-    private final Map<UUID, Set<MatchRequest>> playerToMatchRequestsMap = new TtlHashMap<>(TimeUnit.SECONDS, 30);
+    private final Map<UUID, Set<MatchRequest>> playerToMatchRequestsMap = new HashMap<>();
+
+    public DuelManager() {
+        Bukkit.getScheduler().runTaskTimer(Practice.getInstance(),
+                () -> playerToMatchRequestsMap.forEach((key, value) -> value.removeIf(MatchRequest::hasExpired)),
+                20L, 20L);
+
+        Bukkit.getPluginManager().registerEvents(new DuelQuitListener(this), Practice.getInstance());
+
+        CorePlugin.getInstance().getCommandManager()
+                .registerAllClasses(Collections.singleton(new DuelCommands(this)));
+    }
 
     /**
      * Attempts to get a {@link MatchRequest} with the specified
@@ -20,15 +30,16 @@ public class DuelManager {
      *
      * @param requester the person that requested the match
      * @param requestee the person that's receiving the request
+     * @param kit       the request kit
      * @return the request if found, otherwise null
      */
-    public MatchRequest getRequest(UUID requester, UUID requestee) {
+    public MatchRequest getRequest(UUID requester, UUID requestee, Kit kit) {
         if (!playerToMatchRequestsMap.containsKey(requestee)) {
             return null;
         }
 
         return playerToMatchRequestsMap.get(requestee).stream()
-                .filter(request -> request.getRequester() == requester)
+                .filter(request -> request.getRequester() == requester && request.getKit().getId().equals(kit.getId()))
                 .findFirst().orElse(null);
     }
 
@@ -44,5 +55,15 @@ public class DuelManager {
         MatchRequest request = new MatchRequest(requester, requestee, kit);
 
         playerToMatchRequestsMap.computeIfAbsent(requestee, uuid -> new HashSet<>()).add(request);
+    }
+
+    /**
+     * Removes all requests for the {@code requestee} if
+     * present.
+     *
+     * @param requestee the player whose requests to remove
+     */
+    public void removeRequests(UUID requestee) {
+        playerToMatchRequestsMap.remove(requestee);
     }
 }

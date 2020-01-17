@@ -41,7 +41,9 @@ public class MatchCountdownTask extends BukkitRunnable {
                 }
 
                 player.teleport(teleportLocation);
+                
                 Practice.getInstance().getCustomKitManager().giveBooksOrDefaultKit(player, match.getKit());
+                Practice.getInstance().getDuelManager().removeRequests(player.getUniqueId());
 
                 matchPlayers.add(player);
             }));
