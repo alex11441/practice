@@ -30,8 +30,8 @@ public class KitMaskCommands implements CommandHandler {
     public void kitMaskList(Player player) {
         player.sendMessage("Available masks: "
                 + Joiner.on(", ").join(Arrays.stream(KitMask.values())
-                        .map(KitMask::getId)
-                        .collect(Collectors.toList()))
+                .map(KitMask::getId)
+                .collect(Collectors.toList()))
         );
     }
 

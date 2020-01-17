@@ -76,7 +76,7 @@ public class LobbyManager {
     /**
      * Checks against all other possible "state"s to determine
      * whether or not a player is in the lobby.
-     * 
+     *
      * @param player the player to check
      * @return true if the player is in the lobby, otherwise false
      */

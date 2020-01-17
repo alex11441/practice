@@ -30,8 +30,8 @@ public class ArenaStatusCommands implements CommandHandler {
     public void arenaList(Player player) {
         player.sendMessage("Arenas: "
                 + Joiner.on(", ").join(Practice.getInstance().getArenaManager().getArenas().stream()
-                        .map(Arena::getName)
-                        .collect(Collectors.toList()))
+                .map(Arena::getName)
+                .collect(Collectors.toList()))
         );
     }
 

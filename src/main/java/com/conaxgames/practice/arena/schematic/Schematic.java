@@ -34,8 +34,8 @@ public class Schematic {
      * Pastes the schematic at the given coordinates.
      *
      * @param world the world to paste in
-     * @param x X coordinate to paste in
-     * @param z Z coordinate to paste in
+     * @param x     X coordinate to paste in
+     * @param z     Z coordinate to paste in
      */
     public void pasteSchematic(World world, int x, int z) {
         Vector pasteLocation = new Vector(x, 100, z);

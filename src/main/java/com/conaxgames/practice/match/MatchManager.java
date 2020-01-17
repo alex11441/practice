@@ -39,10 +39,9 @@ public class MatchManager {
      * Creates a match with the given parameters and
      * adds all of the match participants to the caches.
      *
-     * @param kit the match kit
+     * @param kit      the match kit
      * @param isRanked whether or not the match is ranked
-     * @param teams all teams participating in the match
-     *
+     * @param teams    all teams participating in the match
      * @return the created match or null if failed
      */
     public Match createMatch(Kit kit, boolean isRanked, MatchTeam... teams) {
@@ -65,7 +64,6 @@ public class MatchManager {
      * in a match.
      *
      * @param uuid the uuid to check
-     *
      * @return true if the uuid is in a match, otherwise false
      */
     public boolean inMatch(UUID uuid) {
@@ -76,7 +74,6 @@ public class MatchManager {
      * Attempts to get the match with the given {@code uuid} in it.
      *
      * @param uuid the uuid to lookup
-     *
      * @return the match if found, otherwise null
      */
     public Match getMatch(UUID uuid) {

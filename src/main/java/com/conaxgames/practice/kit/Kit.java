@@ -12,7 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public class Kit {
 
     /**
@@ -20,7 +21,8 @@ public class Kit {
      * used to save and load from the database and distinguish
      * this kit from others.
      */
-    @SerializedName("_id") private String id;
+    @SerializedName("_id")
+    private String id;
 
     /**
      * The name displayed to players whenever used.
@@ -51,7 +53,7 @@ public class Kit {
     /**
      * Applies the kit's default armor and inventory
      * contents to the specified {@code player}.
-     *
+     * <p>
      * If the kit does not have a {@link #defaultKitItems},
      * this method will throw a {@link NullPointerException}.
      *
@@ -67,7 +69,6 @@ public class Kit {
      * specified {@link KitMask}.
      *
      * @param mask the mask to check against
-     *
      * @return true if this kit has the mask, otherwise false
      */
     public boolean meetsMask(KitMask mask) {
@@ -79,7 +80,6 @@ public class Kit {
      * or not {@code colored} is true or false.
      *
      * @param colored whether or not to return the colored name
-     *
      * @return the kit's display name
      */
     public String getDisplayName(boolean colored) {
@@ -90,7 +90,6 @@ public class Kit {
      * Toggles an arena by its name's prefix.
      *
      * @param arena the arena to enable/disable
-     *
      * @return true if enabled, otherwise false
      */
     public boolean toggleArena(Arena arena) {

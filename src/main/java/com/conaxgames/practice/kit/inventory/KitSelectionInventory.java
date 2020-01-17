@@ -27,19 +27,19 @@ public class KitSelectionInventory {
         Practice.getInstance().getKitManager().getKits().stream()
                 .filter(kit -> kit.meetsMask(KitMask.ENABLED))
                 .forEach(kit -> {
-            if (rankedOnly && !kit.meetsMask(KitMask.RANKED)) {
-                return;
-            }
-
-            inventory.addItem(
-                    new InventoryUI.AbstractClickableItem(kit.getDisplayItem().clone()) {
-                        public void onClick(InventoryClickEvent event) {
-                            consumer.accept(kit);
-                            event.getWhoClicked().closeInventory();
-                        }
+                    if (rankedOnly && !kit.meetsMask(KitMask.RANKED)) {
+                        return;
                     }
-            );
-        });
+
+                    inventory.addItem(
+                            new InventoryUI.AbstractClickableItem(kit.getDisplayItem().clone()) {
+                                public void onClick(InventoryClickEvent event) {
+                                    consumer.accept(kit);
+                                    event.getWhoClicked().closeInventory();
+                                }
+                            }
+                    );
+                });
 
         player.openInventory(inventory.getCurrentPage());
     }

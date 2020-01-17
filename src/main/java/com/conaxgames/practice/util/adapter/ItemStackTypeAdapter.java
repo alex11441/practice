@@ -28,8 +28,8 @@ public class ItemStackTypeAdapter
         short data = element.has("damage")
                 ? element.get("damage").getAsShort()
                 : (element.has("data")
-                        ? element.get("data").getAsShort()
-                        : 0);
+                ? element.get("data").getAsShort()
+                : 0);
         int count = element.get("count").getAsInt();
 
         ItemStack item = new ItemStack(id, count, data);

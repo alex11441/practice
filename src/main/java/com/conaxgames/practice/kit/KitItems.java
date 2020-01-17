@@ -10,7 +10,8 @@ import org.bukkit.inventory.ItemStack;
  * be able to create and edit their own custom kits
  * but not to edit the server's global kits.
  */
-@Getter @Setter
+@Getter
+@Setter
 public class KitItems {
 
     /**

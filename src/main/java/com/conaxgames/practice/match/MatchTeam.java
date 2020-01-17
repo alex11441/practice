@@ -39,7 +39,6 @@ public class MatchTeam {
      * Determines whether or not the {@code uuid} is alive.
      *
      * @param uuid the uuid of the player to check for
-     *
      * @return true if the player is alive, otherwise false
      */
     public boolean isAlive(UUID uuid) {

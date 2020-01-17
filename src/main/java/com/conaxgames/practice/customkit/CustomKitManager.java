@@ -230,7 +230,7 @@ public class CustomKitManager {
         player.getInventory().setItem(8, new ItemBuilder(Material.ENCHANTED_BOOK)
                 .name(CC.GREEN + "Default Kit")
                 .build());
-        AtomicInteger slot = new AtomicInteger(1);
+        AtomicInteger slot = new AtomicInteger(0);
         kits.forEach(customKit ->
                 player.getInventory().setItem(slot.getAndIncrement(),
                         new ItemBuilder(Material.ENCHANTED_BOOK)

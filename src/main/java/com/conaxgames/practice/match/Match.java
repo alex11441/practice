@@ -148,7 +148,6 @@ public class Match {
      * Attempts to get the team with the given {@code uuid} in it.
      *
      * @param uuid the uuid to lookup
-     *
      * @return the team if found, otherwise null
      */
     public MatchTeam getTeam(UUID uuid) {

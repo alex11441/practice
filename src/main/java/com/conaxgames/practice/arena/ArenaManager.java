@@ -82,12 +82,12 @@ public class ArenaManager {
      * specified number of times.
      *
      * @param schematicName the name of the schematic file to paste
-     * @param times # of times to paste the schematic
-     * @param startingX X coordinate to start pasting at
-     * @param startingZ Z coordinate to start pasting at
-     * @param incrementX whether or not to increment the X coordinate
-     * @param incrementZ whether or not to increment the Z coordinate
-     * @param increment value to increment the {@code startingX} and {@code startingZ} by after every paste
+     * @param times         # of times to paste the schematic
+     * @param startingX     X coordinate to start pasting at
+     * @param startingZ     Z coordinate to start pasting at
+     * @param incrementX    whether or not to increment the X coordinate
+     * @param incrementZ    whether or not to increment the Z coordinate
+     * @param increment     value to increment the {@code startingX} and {@code startingZ} by after every paste
      */
     public void createArenas(String schematicName, int times,
                              int startingX, int startingZ,
@@ -115,7 +115,7 @@ public class ArenaManager {
      * saves the arena.
      *
      * @param schematicName the name of the schematic file to paste
-     * @param arenaName specified arena name or null
+     * @param arenaName     specified arena name or null
      */
     public void createArena(String schematicName, String arenaName, int x, int z) {
         File file = new File(this.schematicsFolder, schematicName + ".schematic");
@@ -145,7 +145,6 @@ public class ArenaManager {
      * Attempts to get the arena with the specified {@code name}.
      *
      * @param name the arena name to lookup
-     *
      * @return the arena if found, otherwise null
      */
     public Arena getArenaFromName(String name) {
@@ -165,7 +164,6 @@ public class ArenaManager {
      * Toggles an arena by its name's prefix.
      *
      * @param prefix the prefix of arena names to disable
-     *
      * @return true if disabled, otherwise false
      */
     public boolean toggleArena(String prefix) {
@@ -212,7 +210,6 @@ public class ArenaManager {
      * given {@code kit}.
      *
      * @param kit the kit to search with
-     *
      * @return a random arena, or null if none found
      */
     public Arena getRandomArena(Kit kit) {

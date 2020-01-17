@@ -22,7 +22,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public class Practice extends JavaPlugin {
 
-    @Getter private static Practice instance;
+    @Getter
+    private static Practice instance;
     public static final Gson GSON = new GsonBuilder()
             .registerTypeHierarchyAdapter(ItemStack.class, new ItemStackTypeAdapter())
             .registerTypeHierarchyAdapter(Location.class, new LocationTypeAdapter())

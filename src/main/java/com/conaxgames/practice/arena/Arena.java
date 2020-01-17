@@ -12,7 +12,8 @@ public class Arena {
      * is used to load, save, and identify specific
      * arenas.
      */
-    @SerializedName("_id") private final String name;
+    @SerializedName("_id")
+    private final String name;
 
     /**
      * Locations players spawn at when a match starts.

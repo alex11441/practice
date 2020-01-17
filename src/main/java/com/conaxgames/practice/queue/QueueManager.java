@@ -31,12 +31,12 @@ public class QueueManager {
     public QueueManager() {
         Practice.getInstance().getKitManager().getKits().stream().filter(kit -> kit.meetsMask(KitMask.ENABLED))
                 .forEach(kit -> {
-            kitQueues.put(kit, false, new KitQueue(kit, false));
+                    kitQueues.put(kit, false, new KitQueue(kit, false));
 
-            if (kit.meetsMask(KitMask.RANKED)) {
-                kitQueues.put(kit, true, new KitQueue(kit, true));
-            }
-        });
+                    if (kit.meetsMask(KitMask.RANKED)) {
+                        kitQueues.put(kit, true, new KitQueue(kit, true));
+                    }
+                });
 
         Bukkit.getScheduler().runTaskTimer(Practice.getInstance(), () -> {
             kitQueues.values().forEach(KitQueue::tick);
@@ -50,7 +50,6 @@ public class QueueManager {
      * Determines whether or not the {@code player} is in a queue.
      *
      * @param player the player to check for
-     *
      * @return true if the player is in a queue, otherwise false
      */
     public boolean inQueue(Player player) {
@@ -61,9 +60,8 @@ public class QueueManager {
      * Attempts to add the {@code player} to any matching queue.
      *
      * @param player the player to add
-     * @param kit the kit to queue for
+     * @param kit    the kit to queue for
      * @param ranked whether or not the player is queuing for ranked
-     *
      * @return true if the player was successfully added, otherwise false
      */
     public boolean addToQueue(Player player, Kit kit, boolean ranked) {
@@ -87,7 +85,6 @@ public class QueueManager {
      * Attempts to remove the {@code player} from their queue, if present.
      *
      * @param player the player to remove
-     *
      * @return true if the player was successfully removed, otherwise false
      */
     public boolean removeFromQueue(Player player) {
