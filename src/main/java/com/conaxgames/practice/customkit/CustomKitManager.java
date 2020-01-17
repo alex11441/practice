@@ -6,22 +6,28 @@ import com.conaxgames.internal.com.mongodb.client.model.Filters;
 import com.conaxgames.internal.com.mongodb.client.model.ReplaceOptions;
 import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.customkit.command.EditorLocationCommand;
+import com.conaxgames.practice.customkit.listener.CustomKitBookListener;
 import com.conaxgames.practice.customkit.listener.CustomKitLoadListener;
 import com.conaxgames.practice.customkit.listener.KitEditorGeneralListener;
 import com.conaxgames.practice.customkit.listener.KitEditorItemListener;
 import com.conaxgames.practice.kit.Kit;
 import com.conaxgames.practice.kit.KitItems;
 import com.conaxgames.util.Config;
+import com.conaxgames.util.ItemBuilder;
+import com.conaxgames.util.finalutil.CC;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class CustomKitManager {
 
@@ -39,9 +45,16 @@ public class CustomKitManager {
     /**
      * Map of all players -> the kit they're editing
      */
-    @Getter private final Map<UUID, Kit> editingKitMap = new HashMap<>();
+    @Getter
+    private final Map<UUID, Kit> editingKitMap = new HashMap<>();
 
-    @Getter @Setter private Location kitEditorLocation;
+    /**
+     * Where to teleport players when they
+     * use the kit editor
+     */
+    @Getter
+    @Setter
+    private Location kitEditorLocation;
 
     public CustomKitManager() {
         // Ensure our kits collection has an index on the uuid field
@@ -54,6 +67,7 @@ public class CustomKitManager {
         }
 
         Bukkit.getPluginManager().registerEvents(new CustomKitLoadListener(this), Practice.getInstance());
+        Bukkit.getPluginManager().registerEvents(new CustomKitBookListener(this), Practice.getInstance());
         Bukkit.getPluginManager().registerEvents(new KitEditorItemListener(), Practice.getInstance());
         Bukkit.getPluginManager().registerEvents(new KitEditorGeneralListener(this), Practice.getInstance());
 
@@ -103,7 +117,7 @@ public class CustomKitManager {
      * new kit
      *
      * @param player the player to save the kit for
-     * @param items the player's chosen items
+     * @param items  the player's chosen items
      */
     public void saveKit(Player player, KitItems items) {
         List<KitItems> playerKits = playerToKitList.computeIfAbsent(player.getUniqueId(), uuid -> new ArrayList<>());
@@ -127,7 +141,7 @@ public class CustomKitManager {
      * database.
      *
      * @param player the player whose kit to remove
-     * @param items the kit
+     * @param items  the kit
      */
     public void deleteKit(Player player, KitItems items) {
         List<KitItems> playerKits = playerToKitList.computeIfAbsent(player.getUniqueId(), uuid -> new ArrayList<>());
@@ -147,9 +161,8 @@ public class CustomKitManager {
      * {@code player}'s kit list.
      *
      * @param player the player to create the kit for
-     * @param kit the kit to copy
-     * @param slot the slot of the custom kit
-     *
+     * @param kit    the kit to copy
+     * @param slot   the slot of the custom kit
      * @return the created kit, or null if failed
      */
     public KitItems createKit(Player player, Kit kit, int slot) {
@@ -169,19 +182,60 @@ public class CustomKitManager {
     }
 
     /**
+     * Returns a list of the player's custom
+     * kits with the specified kit.
+     *
+     * @param player the player to fetch the custom kits for
+     * @param kit    the kit to fetch the custom kits for
+     * @return the custom kits, or null if the player doesn't have one
+     */
+    public List<KitItems> getKits(Player player, Kit kit) {
+        return playerToKitList.computeIfAbsent(player.getUniqueId(), uuid -> new ArrayList<>()).stream()
+                .filter(items -> items.getKitName().equals(kit.getId()))
+                .sorted(Comparator.comparingInt(KitItems::getSlot))
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Returns a player's custom kit with the specified kit
      * and slot.
      *
      * @param player the player to fetch the custom kit for
-     * @param kit the kit to fetch the custom kit for
-     * @param slot the slot of the custom kit
-     *
+     * @param kit    the kit to fetch the custom kit for
+     * @param slot   the slot of the custom kit
      * @return the custom kit, or null if the player doesn't have one
      */
     public KitItems getKit(Player player, Kit kit, int slot) {
         return playerToKitList.computeIfAbsent(player.getUniqueId(), uuid -> new ArrayList<>()).stream()
                 .filter(items -> items.getKitName().equals(kit.getId()) && items.getSlot() == slot)
                 .findFirst().orElse(null);
+    }
+
+    /**
+     * Gives the player the kit's default items if
+     * they don't have any custom kits setup, otherwise
+     * give them a choice w/ books.
+     *
+     * @param player the player to give the items
+     * @param kit    the kit
+     */
+    public void giveBooksOrDefaultKit(Player player, Kit kit) {
+        List<KitItems> kits = getKits(player, kit);
+        if (kits.isEmpty()) {
+            player.sendMessage(CC.GREEN + "You've equipped the default kit.");
+            kit.apply(player);
+            return;
+        }
+
+        player.getInventory().setItem(8, new ItemBuilder(Material.ENCHANTED_BOOK)
+                .name(CC.GREEN + "Default Kit")
+                .build());
+        AtomicInteger slot = new AtomicInteger(1);
+        kits.forEach(customKit ->
+                player.getInventory().setItem(slot.getAndIncrement(),
+                        new ItemBuilder(Material.ENCHANTED_BOOK)
+                                .name(CC.GREEN + "Kit #" + customKit.getSlot())
+                                .build()));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.conaxgames.practice.match.task;
 
+import com.conaxgames.practice.Practice;
 import com.conaxgames.practice.match.Match;
 import com.conaxgames.practice.match.MatchState;
 import com.conaxgames.util.finalutil.CC;
@@ -40,7 +41,7 @@ public class MatchCountdownTask extends BukkitRunnable {
                 }
 
                 player.teleport(teleportLocation);
-                match.getKit().apply(player);
+                Practice.getInstance().getCustomKitManager().giveBooksOrDefaultKit(player, match.getKit());
 
                 matchPlayers.add(player);
             }));

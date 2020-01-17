@@ -2,9 +2,11 @@ package com.conaxgames.practice.match.listener;
 
 import com.conaxgames.practice.match.Match;
 import com.conaxgames.practice.match.MatchManager;
+import com.conaxgames.practice.match.event.MatchEndEvent;
 import com.conaxgames.util.TaskUtil;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,5 +48,12 @@ public class MatchDropListener implements Listener {
         }
 
         event.getDrops().clear();
+    }
+
+    @EventHandler
+    public void onMatchEnd(MatchEndEvent event) {
+        Match match = event.getMatch();
+        match.getEntitiesToRemove().forEach(Entity::remove);
+        match.getEntitiesToRemove().clear();
     }
 }
