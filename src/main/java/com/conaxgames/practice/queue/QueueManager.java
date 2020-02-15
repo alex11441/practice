@@ -65,6 +65,10 @@ public class QueueManager {
      * @return true if the player was successfully added, otherwise false
      */
     public boolean addToQueue(Player player, Kit kit, boolean ranked) {
+        if (!Practice.getInstance().getLobbyManager().inLobby(player)) {
+            return false;
+        }
+
         KitQueue queue = kitQueues.get(kit, ranked);
         if (queue == null) {
             return false;

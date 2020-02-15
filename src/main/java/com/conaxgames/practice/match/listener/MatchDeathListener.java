@@ -1,5 +1,6 @@
 package com.conaxgames.practice.match.listener;
 
+import com.conaxgames.practice.kit.KitMask;
 import com.conaxgames.practice.match.Match;
 import com.conaxgames.practice.match.MatchManager;
 import com.conaxgames.practice.match.MatchTeam;
@@ -36,6 +37,10 @@ public class MatchDeathListener implements Listener {
         match.getTeams().forEach(matchTeam
                 -> matchTeam.getPlayerList().forEach(teamPlayer -> teamPlayer.hidePlayer(player)));
         match.getSpectatorPlayers().forEach(spectator -> spectator.hidePlayer(player));
+
+        if (match.getKit().meetsMask(KitMask.HEARTS)) {
+            PlayerUtil.updateNametag(player, false);
+        }
 
         team.killPlayer(uuid);
         match.checkEnd();

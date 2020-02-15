@@ -1,8 +1,10 @@
 package com.conaxgames.practice.match.task;
 
 import com.conaxgames.practice.Practice;
+import com.conaxgames.practice.kit.KitMask;
 import com.conaxgames.practice.match.Match;
 import com.conaxgames.practice.match.MatchManager;
+import com.conaxgames.practice.util.PlayerUtil;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,6 +24,10 @@ public class MatchEndTask extends BukkitRunnable {
             match.getTeams().forEach(team -> team.getPlayerList().forEach(player -> {
                 Practice.getInstance().getLobbyManager().sendToLobby(player);
                 matchManager.getPlayerToMatchMap().remove(player.getUniqueId());
+
+                if (match.getKit().meetsMask(KitMask.HEARTS)) {
+                    PlayerUtil.updateNametag(player, false);
+                }
             }));
 
             match.getSpectators().forEach(uuid -> {

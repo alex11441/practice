@@ -41,7 +41,11 @@ public class Arena {
      * @return the A spawn
      */
     public Location getSpawnA() {
-        return spawnA.clone().add(0, 2.5, 0);
+        if (spawnA == null) {
+            return null;
+        } else {
+            return spawnA.clone().add(0, 2.5, 0);
+        }
     }
 
     /**
@@ -51,7 +55,11 @@ public class Arena {
      * @return the B spawn
      */
     public Location getSpawnB() {
-        return spawnB.clone().add(0, 2.5, 0);
+        if (spawnB == null) {
+            return null;
+        } else {
+            return spawnB.clone().add(0, 2.5, 0);
+        }
     }
 
 }

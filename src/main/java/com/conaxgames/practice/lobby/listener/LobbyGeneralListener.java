@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -31,6 +32,20 @@ public class LobbyGeneralListener implements Listener {
 
         if (lobbyManager.inLobby(player)) {
             event.getDrops().clear();
+        }
+    }
+
+    @EventHandler
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return;
+        }
+
+        Player player = (Player) event.getEntity();
+
+        if (lobbyManager.inLobby(player)) {
+            event.setFoodLevel(20);
+            event.setCancelled(true);
         }
     }
 }

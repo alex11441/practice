@@ -13,7 +13,8 @@ public enum KitMask {
     RANKED(2, "Ranked", "ranked"),
     ALLOW_BUILDING(4, "Allow Building", "allow_building"),
     EDITABLE(8, "Is Editable", "editable"),
-    DISALLOW_HEALTH_REGEN(16, "Disallow Health Regen", "disallowregen");
+    DISALLOW_HEALTH_REGEN(16, "Disallow Health Regen", "disallowregen"),
+    HEARTS(32, "Show hearts above head", "hearts");
 
     private final int mask;
     private final String name;

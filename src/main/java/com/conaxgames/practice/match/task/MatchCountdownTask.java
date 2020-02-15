@@ -1,8 +1,10 @@
 package com.conaxgames.practice.match.task;
 
 import com.conaxgames.practice.Practice;
+import com.conaxgames.practice.kit.KitMask;
 import com.conaxgames.practice.match.Match;
 import com.conaxgames.practice.match.MatchState;
+import com.conaxgames.practice.util.PlayerUtil;
 import com.conaxgames.util.finalutil.CC;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
@@ -41,9 +43,14 @@ public class MatchCountdownTask extends BukkitRunnable {
                 }
 
                 player.teleport(teleportLocation);
-                
+
+                PlayerUtil.clearPlayer(player);
                 Practice.getInstance().getCustomKitManager().giveBooksOrDefaultKit(player, match.getKit());
                 Practice.getInstance().getDuelManager().removeRequests(player.getUniqueId());
+
+                if (match.getKit().meetsMask(KitMask.HEARTS)) {
+                    PlayerUtil.updateNametag(player, true);
+                }
 
                 matchPlayers.add(player);
             }));

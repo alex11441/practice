@@ -29,7 +29,7 @@ public class KitArenaCommands implements CommandHandler {
 
         player.sendMessage(CC.GREEN
                 + (kit.toggleArena(arena) ? "Enabled" : "Disabled")
-                + " arena " + arena + " for kit " + kit.getId() + ".");
+                + " arena " + arena.getName() + " for kit " + kit.getId() + ".");
         TaskUtil.runAsync(() -> Practice.getInstance().getKitManager().saveKit(kit));
     }
 }
